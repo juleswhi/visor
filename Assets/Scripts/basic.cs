@@ -14,6 +14,7 @@ public class basic : MonoBehaviour
     public LayerMask groundMask;
     private bool isGrounded;
     public Transform tr;
+    public GameObject self;
 
     // Start is called before the first frame update
     void Start()
@@ -57,10 +58,6 @@ public class basic : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("test");
-        gameObject.transform.position = new Vector3(0f, 10f, 0f);
-    }
+    
 
 }
