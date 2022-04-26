@@ -6,7 +6,9 @@ public class basic : MonoBehaviour
 {
     Rigidbody rb;
 
-    private float xInput, yInput;
+    public CharacterController controller;
+
+    private float xInput, zInput;
 
     public float mms;
 
@@ -20,23 +22,15 @@ public class basic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
-    }
-
-    void FixedUpdate() {
-        // movement
-        Movement();    
-    }
-
-
-    private void GetInput()
-    {
         xInput = Input.GetAxis("Horizontal");
-        yInput = Input.GetAxis("Vertical");
+        zInput = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * xInput + transform.forward * zInput;
+
+        controller.Move(move);
     }
 
-    private void Movement()
-    {
-        rb.AddForce(xInput * mms, 0 , yInput * mms);
-    }
+
+
+
 }
