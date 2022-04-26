@@ -23,7 +23,6 @@ public class basic : MonoBehaviour
         GetInput();
     }
 
-    private
     void FixedUpdate() {
         Movement();    
     }
