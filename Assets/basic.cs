@@ -24,7 +24,7 @@ public class basic : MonoBehaviour
     }
 
     void FixedUpdate() {
-        // movemvent
+        // movement
         Movement();    
     }
 
