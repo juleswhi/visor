@@ -5,16 +5,14 @@ using UnityEngine;
 public class basic : MonoBehaviour
 {
     Rigidbody rb;
-
+    public float airAccelaration;
     public CharacterController controller;
-    public Transform groundCheck;    
+    public Transform groundCheck;
     private Vector3 velocity;
     private float xInput, zInput, gravity;
     public float mms, groundDistance, jumpHeight;
     public LayerMask groundMask;
     private bool isGrounded;
-    public Transform tr;
-    public GameObject self;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +27,10 @@ public class basic : MonoBehaviour
 
         if(isGrounded && velocity.y < 0)
             velocity.y = -2f;
+        if(isGrounded)
+            velocity.x = 0f;
+
+
 
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
@@ -40,9 +42,14 @@ public class basic : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
+        if(Input.GetButtonDown("Horizontal") && !isGrounded)
+        {
+            velocity.x += airAccelaration * Time.deltaTime * airAccelaration;
+        }
+
 
         velocity.y += gravity * Time.deltaTime;
-
+        Debug.Log($"Velocity is: {velocity.x}");
         controller.Move(velocity * Time.deltaTime);
 
     }
@@ -55,9 +62,10 @@ public class basic : MonoBehaviour
         gravity = -25f;
         groundDistance = 0.4f;
         jumpHeight = 6.5f;
+        airAccelaration = 5f;
     }
 
 
-    
+
 
 }
