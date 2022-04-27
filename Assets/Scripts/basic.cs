@@ -35,21 +35,21 @@ public class basic : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * xInput + transform.forward * zInput;
+        if(Input.GetButtonDown("Horizontal") && !isGrounded)
+        {
+          airAccelaration += airAccelaration;
+        }
 
-        controller.Move(move * mms * Time.deltaTime);
+        Vector3 move = transform.right * xInput + transform.forward * zInput;
+        controller.Move(move * mms * airAccelaration * Time.deltaTime);
 
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if(isGrounded)
+            airAccelaration = 1f;
 
-        if(Input.GetButtonDown("Horizontal") && !isGrounded)
-        {
-            velocity.x += airAccelaration * Time.deltaTime * airAccelaration;
-        }
-
-
+        Debug.Log($"Air Accelarastion: {airAccelaration}, move: {move}");
         velocity.y += gravity * Time.deltaTime;
-        Debug.Log($"Velocity is: {velocity.x}");
         controller.Move(velocity * Time.deltaTime);
 
     }
@@ -62,7 +62,7 @@ public class basic : MonoBehaviour
         gravity = -25f;
         groundDistance = 0.4f;
         jumpHeight = 6.5f;
-        airAccelaration = 5f;
+        airAccelaration = 1f;
     }
 
 
